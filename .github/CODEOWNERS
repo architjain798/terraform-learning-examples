@@ -1,0 +1,17 @@
+# Global ownership - repository maintainer reviews all changes
+* @architjain
+
+# Terraform configurations require infrastructure expertise
+*.tf @architjain
+*.tfvars @architjain
+
+# Documentation changes welcome from community but need review
+*.md @architjain
+/docs/ @architjain
+
+# GitHub configurations and workflows
+/.github/ @architjain
+
+# Security-sensitive files
+.gitignore @architjain
+/.github/workflows/ @architjain
