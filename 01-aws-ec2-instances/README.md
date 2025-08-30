@@ -2,6 +2,14 @@
 
 This example demonstrates creating EC2 instances with proper security groups, SSH access, and automated software installation.
 
+
+## Command to do ssh
+
+```
+ssh -i ~/.ssh/terraform-key-ec2 ubuntu@public_ip
+```
+
+
 ## What This Example Creates
 
 - 2 EC2 instances (configurable via variables)
