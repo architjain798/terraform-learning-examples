@@ -1,3 +1,26 @@
+# Local values for dynamic instance configurations based on environment
+locals {
+  # Dynamic instance configurations that can use variables
+  instance_configurations = {
+    MY_EC2_1 = {
+      instance_type    = "t2.micro"
+      root_volume_size = var.environment == "prod" ? 50 : 20 # Larger in prod
+      throughput       = var.environment == "prod" ? 250 : 125
+      iops             = var.environment == "prod" ? 6000 : 3000
+      purpose          = "Primary web server"
+      backup_required  = var.environment == "prod" ? "daily" : "weekly"
+    }
+    MY_EC2_2 = {
+      instance_type    = var.environment == "prod" ? "t3.medium" : "t2.small" # Upgrade in prod
+      root_volume_size = var.environment == "prod" ? 100 : 30                 # Much larger in prod
+      throughput       = var.environment == "prod" ? 500 : 125
+      iops             = var.environment == "prod" ? 8000 : 3000
+      purpose          = "Secondary web server"
+      backup_required  = var.environment == "prod" ? "daily" : "weekly"
+    }
+  }
+}
+
 # Create a key pair for SSH access to EC2 instances
 # This key pair will be used for secure shell access to all instances
 resource "aws_key_pair" "web-server-key" {
@@ -75,7 +98,7 @@ resource "aws_security_group" "web-server-sg" {
 # EC2 instances for web servers using for_each for multiple instance types
 # This demonstrates Infrastructure as Code scalability and consistency
 resource "aws_instance" "web-servers" {
-  for_each = var.instance_configurations
+  for_each = local.instance_configurations # Changed from var to local
 
   # Explicit dependency to ensure security group exists first
   depends_on = [aws_security_group.web-server-sg]
