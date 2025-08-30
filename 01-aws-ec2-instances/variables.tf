@@ -58,16 +58,16 @@ variable "instance_configurations" {
     backup_required  = string
   }))
   default = {
-    web-server-1 = {
-      instance_type    = "t3.micro"
+    MY_EC2_1 = {
+      instance_type    = "t2.micro" # Back to original t2.micro
       root_volume_size = 20
       throughput       = 125
       iops             = 3000
       purpose          = "Primary web server"
       backup_required  = "daily"
     }
-    web-server-2 = {
-      instance_type    = "t3.small"
+    MY_EC2_2 = {
+      instance_type    = "t2.small" # Restored your original t2.small
       root_volume_size = 30
       throughput       = 125
       iops             = 3000
