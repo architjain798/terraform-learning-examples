@@ -58,6 +58,12 @@ variable "ssh_cidr_blocks" {
   }
 }
 
+variable "ec2_default_root_storage_size" {
+  description = "Default storage value if not assigned"
+  type        = number
+  default     = 8
+}
+
 # Monitoring Configuration
 variable "enable_detailed_monitoring" {
   description = "Enable detailed CloudWatch monitoring for instances"
