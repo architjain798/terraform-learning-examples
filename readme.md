@@ -1,6 +1,9 @@
+
 # Terraform Learning and Practice Repository
 
-This repository contains various Terraform configurations for learning Infrastructure as Code (IaC) concepts and AWS resource ## 🔧 Development Setup
+This repository contains various Terraform configurations for learning Infrastructure as Code (IaC) concepts and AWS resource management.
+
+## 🔧 Development Setup
 
 ### Git Hooks for Quality Assurance
 
@@ -46,7 +49,8 @@ npm install -g markdownlint-cli
 brew install shellcheck
 ```
 
-## 🤖 GitHub Copilot Integrationanagement.
+
+## 🤖 GitHub Copilot Integration
 
 ## 📁 Repository Structure
 
@@ -65,11 +69,46 @@ terraform-practice/
 │   ├── provider.tf                     # Provider configuration
 │   ├── script.sh                       # User data script for EC2
 │   └── terra-key.pub                   # SSH public key
-└── 02-aws-s3-bucket/                   # S3 bucket example
-    ├── s3.tf                           # S3 bucket resources
-    ├── variables.tf                    # Input variables
-    ├── outputs.tf                      # Output values
-    └── provider.tf                     # Provider configuration
+├── 02-aws-s3-bucket/                   # S3 bucket example
+│   ├── s3.tf                           # S3 bucket resources
+│   ├── variables.tf                    # Input variables
+│   ├── outputs.tf                      # Output values
+│   └── provider.tf                     # Provider configuration
+├── 03-aws-remote-backend/              # Remote backend with S3 and DynamoDB
+│   ├── s3.tf                           # S3 backend and bucket
+│   ├── dynamodb.tf                     # DynamoDB table for state locking
+│   ├── providers.tf                    # Provider configuration
+│   ├── variables.tf                    # Input variables
+│   └── terraform.tfstate*              # State files (gitignored)
+### 3. AWS Remote Backend (`03-aws-remote-backend/`)
+
+Demonstrates how to configure a remote backend for Terraform state using AWS S3 (for state storage) and DynamoDB (for state locking). This is a best practice for team collaboration and state consistency.
+
+**Features demonstrated:**
+- S3 bucket for remote state storage (with encryption and versioning)
+- DynamoDB table for state locking
+- Provider version pinning
+- Secure, production-style backend setup
+
+**Setup:**
+
+1. Review and customize variables in `variables.tf` (e.g., bucket name, region).
+2. Initialize and apply:
+    ```bash
+    cd 03-aws-remote-backend
+    terraform init
+    terraform plan
+    terraform apply
+    ```
+
+**Security & Cost Notes:**
+- S3 bucket blocks public access and enables encryption by default.
+- DynamoDB and S3 incur AWS charges; destroy resources when done.
+- Never commit state files or secrets to version control.
+
+**Learn more:**
+- [Terraform Remote State Docs](https://developer.hashicorp.com/terraform/language/state/remote)
+- [AWS S3 Backend Docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket)
 ```
 
 ## 🚀 Getting Started
@@ -162,7 +201,7 @@ terraform plan
 terraform apply
 ```
 
-## 🔧 Configuration
+## ⚙️ Configuration
 
 ### Customizing Variables
 
@@ -179,9 +218,15 @@ Each example includes a `variables.tf` file with configurable options:
 - `ec2_ami_id`: AMI ID for instances
 - `ec2_root_storage_size`: Root volume size in GB
 
+
 **02-aws-s3-bucket variables:**
 - `bucket_name`: S3 bucket name (must be globally unique)
 - `aws_region`: AWS region
+
+**03-aws-remote-backend variables:**
+- `region`: AWS region
+- `bucket_name`: S3 bucket name for state
+- `dynamodb_table`: DynamoDB table name for locking
 
 ### Example: Custom Variables
 
@@ -216,7 +261,7 @@ terraform destroy -auto-approve
 - [AWS Provider Documentation](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 - [Terraform Best Practices](https://www.terraform.io/docs/cloud/guides/recommended-practices/index.html)
 
-## � GitHub Copilot Integration
+## 🤖 GitHub Copilot Integration
 
 This repository includes custom GitHub Copilot instructions to enhance your coding experience:
 
@@ -229,7 +274,7 @@ To enable these instructions in VS Code:
 
 The instructions ensure that Copilot suggestions follow Terraform best practices, security guidelines, and educational standards.
 
-## �🤝 Contributing
+## 🤝 Contributing
 
 This is a learning repository. Feel free to:
 - Add new examples
@@ -299,7 +344,17 @@ block parameter {
     terraform import aws_instance.my_new_instance i-wqe1231sadas
     ```
 
+6. To list the workspace
 
+    ```
+    terraform workspace list
+    ```
+
+7. 'Default` is the default workspace if not defined
+
+    ```
+    terraform workspace select <name>
+    ```
 
 
 <!-- # local_file.my_file will be created
