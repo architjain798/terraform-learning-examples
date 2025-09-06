@@ -3,6 +3,7 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
+  # Attribute for state lock
   attribute {
     name = "LockID"
     type = "S"
@@ -12,4 +13,6 @@ resource "aws_dynamodb_table" "basic-dynamodb-table" {
     Name        = var.my_dynamoDb
     Environment = var.environment
   }
+
+  # This table is used for Terraform state locking to prevent concurrent changes
 }
