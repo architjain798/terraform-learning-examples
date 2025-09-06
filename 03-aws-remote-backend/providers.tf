@@ -5,15 +5,6 @@ terraform {
       version = "6.12.0"
     }
   }
-
-  backend "s3" {
-
-    bucket         = "my-lock-bucket-archit-20250905"
-    key            = "terraform.tfstate"
-    region         = "eu-west-2"
-    dynamodb_table = "my-state-table"
-
-  }
 }
 
 provider "aws" {

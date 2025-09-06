@@ -250,6 +250,58 @@ block parameter {
     attributes --> after execution
 }
 
+## Important Commands
+
+1. To refresh terraform states
+
+    ```
+    terraform refresh
+    ```
+
+2. To see all list of states/ resources created
+
+    ```
+    terraform state list
+    ```
+
+
+    if the output is
+
+    ```
+    data.aws_vpc.default
+    aws_instance.web-servers["MY_EC2_1"]
+    aws_instance.web-servers["MY_EC2_2"]
+    aws_key_pair.web-server-key
+    ```
+
+3. To see particular state / resource
+
+    ```
+    terraform state show aws_key_pair.web-server-key
+    ```
+
+
+    ```
+    terraform state show 'aws_instance.web-servers["MY_EC2_1"]'
+    ```
+
+4. To remove / delete the state
+    - this means it will onlt delete the links between aws and terraform
+    - it will not delete the resoiurce from aws console
+
+    ```
+    terraform state rm aws_key_pair.web-server-key
+    ```
+
+5. to import the exisiting aws resouce that was not manageed by terraform earlier
+
+    ```
+    terraform import aws_instance.my_new_instance i-wqe1231sadas
+    ```
+
+
+
+
 <!-- # local_file.my_file will be created
 + resource "local_file" "my_file" {
     + content              = "lorem epsum"
